@@ -1,0 +1,12 @@
+Field,Date_Format,Completeness_NULL,Completeness_Empty,Completeness_Encoded,Completeness_Encoded_Mapping,Uniqueness_Rows,Consistency_Compare,Consistency_Compare_Field,Consistency_Compare_Mapping,Consistency_Date_Relations,Consistency_Date_Relationship,Consistency_Date_Relations_Field,Timeliness_Date_Diff,Timeliness_Date_Diff_Field,Timeliness_Date_Diff_Threshold,Validity_Dates_Future,Validity_Date_Range,Validity_Date_Range_Min,Validity_Date_Range_Max,Validity_NHS_Number,Validity_Postcode_UK,Validity_Lookup_Table,Validity_Lookup_Type,Validity_Lookup_Codes,Validity_Range,Validity_Range_Numeric,Validity_Pattern,Validity_Pattern_Regex,Accuracy_Gold_Standard
+Age,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+Gender,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+Race,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+Diagnosis,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+T,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+N,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+M,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+TwoYearSurvival,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+IsDead,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+ECOG,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE
+IMD,,TRUE,TRUE,FALSE,,TRUE,FALSE,,,FALSE,,,FALSE,,,FALSE,FALSE,,,FALSE,FALSE,FALSE,,,FALSE,,FALSE,,FALSE

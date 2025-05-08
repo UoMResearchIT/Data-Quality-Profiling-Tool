@@ -66,7 +66,7 @@ app_ui = ui.page_fillable(
     # Title
     ui.p(
         ui.strong(ui.h1(
-            "DQMaRC: Data Quality Profiling",
+            "CRUK Data Quality Profiling Tool",
             )
         ), 
     ),
