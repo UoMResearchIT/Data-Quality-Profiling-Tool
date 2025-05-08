@@ -99,8 +99,6 @@ class DonutChartGenerator:
                 go.Pie(
                     labels=['Bad', 'Good'],  # Updated labels
                     values=[avg_prop_bad, avg_prop_good],
-                    title=f"{avg_prop_good}%",
-                    titlefont_size=22,
                     hole=0.6,
                     textposition="none",
                     showlegend=False,
