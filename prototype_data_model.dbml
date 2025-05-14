@@ -1,0 +1,64 @@
+
+Table person {
+  person_id bigint [pk]
+  gender_concept_id int
+  birth_date date
+}
+
+Table visit {
+  visit_id bigint [pk]
+  person_id bigint [ref: > person.person_id]
+  visit_start_date date
+  visit_end_date   date
+}
+
+Table condition {
+  condition_id bigint [pk]
+  person_id    bigint [ref: > person.person_id]
+  visit_id     bigint [ref: > visit.visit_id]
+  condition_concept_id int
+  condition_start_date date
+  source_code   varchar
+}
+
+Table drug_exposure {
+  drug_exposure_id bigint [pk]
+  person_id        bigint [ref: > person.person_id]
+  visit_id         bigint [ref: > visit.visit_id]
+  drug_concept_id  int
+  exposure_start_date date
+  exposure_end_date   date
+  dose_value     float
+  dose_unit      varchar
+  source_code    varchar
+}
+
+Table measurement {
+  measurement_id bigint [pk]
+  person_id      bigint [ref: > person.person_id]
+  visit_id       bigint [ref: > visit.visit_id]
+  measurement_concept_id int
+  measurement_date date
+  value_as_number float
+  unit           varchar
+  source_code    varchar
+}
+
+Table episode {
+  episode_id bigint [pk]
+  person_id  bigint [ref: > person.person_id]
+  episode_start_date date
+  episode_end_date   date
+  episode_concept_id int
+  episode_type_concept_id int
+  episode_number int
+}
+
+Table episode_event {
+  episode_id bigint [ref: > episode.episode_id]
+  event_table varchar
+  event_id    bigint
+  indexes {
+    (episode_id, event_table, event_id) [pk]
+  }
+}
