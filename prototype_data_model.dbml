@@ -1,64 +1,60 @@
+// UKCAT Dummy Data → OMOP CDM v5.4 Oncology Extension Prototype
 
 Table person {
-  person_id bigint [pk]
-  gender_concept_id int
-  birth_date date
+  person_id                bigint   [pk]   // patient_id
+  birth_date               date            // patient_birth_date
+  gender_source_value      varchar         // patient_gender
+  ethnicity_source_value   varchar         // patient_ethnic_origin
 }
 
-Table visit {
-  visit_id bigint [pk]
-  person_id bigint [ref: > person.person_id]
-  visit_start_date date
-  visit_end_date   date
+Table death {
+  person_id  bigint [pk]                // patient_death_date
+  death_date date                       // patient_death_date
 }
 
-Table condition {
-  condition_id bigint [pk]
-  person_id    bigint [ref: > person.person_id]
-  visit_id     bigint [ref: > visit.visit_id]
-  condition_concept_id int
-  condition_start_date date
-  source_code   varchar
-}
-
-Table drug_exposure {
-  drug_exposure_id bigint [pk]
-  person_id        bigint [ref: > person.person_id]
-  visit_id         bigint [ref: > visit.visit_id]
-  drug_concept_id  int
-  exposure_start_date date
-  exposure_end_date   date
-  dose_value     float
-  dose_unit      varchar
-  source_code    varchar
+Table condition_occurrence {
+  condition_occurrence_id   bigint   [pk]   // surrogate key
+  person_id                 bigint          // patient_id
+  condition_start_date      date            // patient_diagnosis_date
+  condition_concept_id      int             // mapped from icd10_code
+  condition_source_value    varchar         // icd10_code
+  primary_site_source_value varchar         // primary_disease_site_specific
+  eform_data_log_id         bigint          // eform_data_log_id
+  condition_record_datetime datetime        // date_created
+  reporting_site            varchar         // reporting_site
 }
 
 Table measurement {
-  measurement_id bigint [pk]
-  person_id      bigint [ref: > person.person_id]
-  visit_id       bigint [ref: > visit.visit_id]
-  measurement_concept_id int
-  measurement_date date
-  value_as_number float
-  unit           varchar
-  source_code    varchar
+  measurement_id        bigint   [pk]       // surrogate key
+  person_id             bigint              // patient_id
+  measurement_concept_id int                 // concept for t, n, m, performance_status
+  measurement_date      date                // patient_diagnosis_date
+  value_as_number       float               // t, n, m, performance_status values
+  unit                  varchar             // optional unit (e.g. staging)
 }
 
 Table episode {
-  episode_id bigint [pk]
-  person_id  bigint [ref: > person.person_id]
-  episode_start_date date
-  episode_end_date   date
-  episode_concept_id int
-  episode_type_concept_id int
-  episode_number int
+  episode_id            bigint   [pk]       // surrogate key
+  person_id             bigint              // patient_id
+  episode_concept_id    int                 // mapped from treatment_type
+  episode_start_date    date                // radiotherapy_start_date
+  episode_end_date      date                // radiotherapy_end_date
+  fraction_count        int                 // number_of_fractions_received
 }
 
 Table episode_event {
-  episode_id bigint [ref: > episode.episode_id]
-  event_table varchar
-  event_id    bigint
+  episode_id   bigint
+  event_table  varchar           // "condition_occurrence" or "measurement"
+  event_id     bigint            // PK of the linked event row
+
   indexes {
     (episode_id, event_table, event_id) [pk]
   }
 }
+
+// ─── Foreign key relationships ───────────────────────────────────
+Ref: death.person_id                       > person.person_id
+Ref: condition_occurrence.person_id       > person.person_id
+Ref: measurement.person_id                > person.person_id
+Ref: episode.person_id                    > person.person_id
+Ref: episode_event.episode_id             > episode.episode_id
