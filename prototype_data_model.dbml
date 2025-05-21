@@ -1,60 +1,67 @@
-// UKCAT Dummy Data → OMOP CDM v5.4 Oncology Extension Prototype
+// OMOP v5.4 + Oncology prototype (dummy‐data only)
 
-Table person {
-  person_id                bigint   [pk]   // patient_id
-  birth_date               date            // patient_birth_date
-  gender_source_value      varchar         // patient_gender
-  ethnicity_source_value   varchar         // patient_ethnic_origin
+// PERSON
+table person {
+  person_id                bigint      [pk]
+  birth_date               date        [not null]
+  gender_source_value      varchar(50) [not null]
+  ethnicity_source_value   varchar(50)
 }
 
-Table death {
-  person_id  bigint [pk]                // patient_death_date
-  death_date date                       // patient_death_date
+// DEATH
+table death {
+  death_id                 bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  death_date               date        [not null]
 }
 
-Table condition_occurrence {
-  condition_occurrence_id   bigint   [pk]   // surrogate key
-  person_id                 bigint          // patient_id
-  condition_start_date      date            // patient_diagnosis_date
-  condition_concept_id      int             // mapped from icd10_code
-  condition_source_value    varchar         // icd10_code
-  primary_site_source_value varchar         // primary_disease_site_specific
-  eform_data_log_id         bigint          // eform_data_log_id
-  condition_record_datetime datetime        // date_created
-  reporting_site            varchar         // reporting_site
+// CONDITION_OCCURRENCE
+table condition_occurrence {
+  condition_occurrence_id  bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  condition_start_date     date        [not null]
+  condition_source_value   varchar(50) [not null]  // your ICD-10 code
+  primary_site_source_value varchar(50)
+  eform_data_log_id        bigint
+  condition_record_datetime datetime
+  reporting_site           varchar(100)
 }
 
-Table measurement {
-  measurement_id        bigint   [pk]       // surrogate key
-  person_id             bigint              // patient_id
-  measurement_concept_id int                 // concept for t, n, m, performance_status
-  measurement_date      date                // patient_diagnosis_date
-  value_as_number       float               // t, n, m, performance_status values
-  unit                  varchar             // optional unit (e.g. staging)
+// OBSERVATION
+// (TNM stages, performance, primary site, treatment type)
+table observation {
+  observation_id           bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  observation_date         date
+  observation_datetime     datetime
+  observation_source_value varchar(100) [not null]
+  value_as_number          float
 }
 
-Table episode {
-  episode_id            bigint   [pk]       // surrogate key
-  person_id             bigint              // patient_id
-  episode_concept_id    int                 // mapped from treatment_type
-  episode_start_date    date                // radiotherapy_start_date
-  episode_end_date      date                // radiotherapy_end_date
-  fraction_count        int                 // number_of_fractions_received
+// PROCEDURE_OCCURRENCE
+// (Radiotherapy start/end)
+table procedure_occurrence {
+  procedure_occurrence_id   bigint      [pk]
+  person_id                 bigint      [not null, ref: > person.person_id]
+  procedure_date            date        [not null]
+  procedure_source_value    varchar(50) [not null]
 }
 
-Table episode_event {
-  episode_id   bigint
-  event_table  varchar           // "condition_occurrence" or "measurement"
-  event_id     bigint            // PK of the linked event row
-
-  indexes {
-    (episode_id, event_table, event_id) [pk]
-  }
+// EPISODE (Oncology Extension)
+// (One row per RT course)
+table episode {
+  episode_id               bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  episode_start_date       date        [not null]
+  episode_end_date         date
+  fraction_count           int
 }
 
-// ─── Foreign key relationships ───────────────────────────────────
-Ref: death.person_id                       > person.person_id
-Ref: condition_occurrence.person_id       > person.person_id
-Ref: measurement.person_id                > person.person_id
-Ref: episode.person_id                    > person.person_id
-Ref: episode_event.episode_id             > episode.episode_id
+// EPISODE_EVENT (Oncology Extension)
+// (Links each RT start/end & obs → that episode)
+table episode_event {
+  episode_event_id         bigint      [pk]
+  episode_id               bigint      [not null, ref: > episode.episode_id]
+  event_table              varchar(50) [not null]  // e.g. 'procedure_occurrence' or 'observation'
+  event_id                 bigint      [not null]
+}
