@@ -1,0 +1,22 @@
+Dummy Column,OMOP Table,OMOP Field
+patient_id,person,person_id
+patient_birth_date,person,birth_date
+patient_gender,person,gender_source_value
+patient_ethnic_origin,person,ethnicity_source_value
+patient_death_date,death,death_date
+patient_diagnosis_date,condition_occurrence,condition_start_date
+icd10_code,condition_occurrence,condition_source_value
+primary_disease_site_specific,condition_occurrence,primary_site_source_value
+eform_data_log_id,condition_occurrence,eform_data_log_id
+date_created,condition_occurrence,condition_record_datetime
+reporting_site,condition_occurrence,reporting_site
+t,observation,observation_source_value = 'T stage'
+n,observation,observation_source_value = 'N stage'
+m,observation,observation_source_value = 'M stage'
+performance_status,observation,observation_source_value = 'performance status'
+treatment_type,observation,observation_source_value = 'treatment type'
+radiotherapy_start_date,procedure_occurrence,procedure_date + procedure_source_value = 'Radiotherapy Start'
+radiotherapy_end_date,procedure_occurrence,procedure_date + procedure_source_value = 'Radiotherapy End'
+radiotherapy_start_date,episode,episode_start_date
+radiotherapy_end_date,episode,episode_end_date
+number_of_fractions_received,episode,fraction_count
