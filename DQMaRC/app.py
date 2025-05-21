@@ -7,7 +7,6 @@ import pandas as pd
 # === shiny packages === 
 from shiny import App, reactive, render, ui
 from shiny.types import FileInfo
-from shiny import reactive
 import asyncio
 
 from shinywidgets import output_widget, render_widget, register_widget
@@ -29,6 +28,9 @@ from DQMaRC.UtilitiesDQMaRC import (
     about_text, key_features_text, get_started_text, 
     error_input_df_text
 )
+from DQMaRC.DataQualityCDM import DataQualityCDM
+from DQMaRC.csv_cdm_loader import load_zip
+
 
 
 # ==================================================================
@@ -106,10 +108,18 @@ app_ui = ui.page_fillable(
                         accept=[".csv", ".xlsx"]
                         ),
                     ),
-            ui.card(
-                ui.help_text("Input Data Shape"),
-                ui.output_ui("input_data_shape")),
-            ),
+                ui.card(
+                    ui.input_file(
+                        id="upload_cdm_zip",
+                        label="Upload CDM zip",
+                        button_label="Browse (zip)",
+                        accept=[".zip"]
+                        ),
+                    ),
+                ui.card(
+                    ui.help_text("Input Data Shape"),
+                    ui.output_ui("input_data_shape")),
+                    ),
             # view uploaded dataset
             ui.card(
                 ui.output_data_frame("view_input_data"),
@@ -283,6 +293,7 @@ def server(input, output, session):
     test_params_global_updated = reactive.Value() # updated test params global
     summary_results_global = reactive.Value()
     source_df_raw_global = reactive.Value()
+    dq_tool_holder = reactive.Value()   
 
     # ==================================
     # ========== Input Data ============
@@ -295,9 +306,39 @@ def server(input, output, session):
         if source_data_file:
             df_source_data = pd.read_csv(source_data_file[0]["datapath"], sep=",", na_filter=False)
             input_df_global.set(df_source_data)
+            # — initialize the flat-CSV DQ tool —
+            from DQMaRC.DataQuality import DataQuality
+            dq = DataQuality(df_source_data)
+            dq_tool_holder.set(dq)
+            ui.notification_show("DataQuality tool initialized for flat CSV.", type='message')
             ui.notification_show("Input data successfully uploaded.", type='message')
         else:
             ui.notification_show("Please upload an input dataset CSV file.", type='error')
+
+    @reactive.Effect
+    @reactive.event(input.upload_cdm_zip)
+    def handle_cdm_zip():
+        zfile = input.upload_cdm_zip()
+        if not zfile:
+            return
+        tables = load_zip(zfile[0]["datapath"])
+
+        # ——— prefix every column with its table name ———
+        flat_parts = []
+        for tbl_name, df in tables.items():
+            df2 = df.copy()
+            df2.columns = [f"{tbl_name}_{col}" for col in df.columns]
+            flat_parts.append(df2)
+        flat = pd.concat(flat_parts, axis=1) if flat_parts else pd.DataFrame()
+        # ——————————————————————————————
+
+        input_df_global.set(flat)
+
+        dq = DataQualityCDM(tables, DataQuality)
+        dq_tool_holder.set(dq)
+        ui.notification_show(f"CDM zip loaded ({len(tables)} tables)", type="message")
+
+    
 
     #===================================
     def show_error_input_df_text(df_input, id_num):
@@ -367,24 +408,24 @@ def server(input, output, session):
         else:
             ui.notification_show("Please select a test parameters file to upload.", type='error')
 
-    # initialise DQ tool
-    @reactive.Calc
-    @reactive.event(input.initialise_params, input.run_parameters)
-    def initialise_DQ_tool():
-        df = input_df_global()
-        if df is None or df.empty:
-            # Show notification if no data is uploaded
-            ui.notification_show(
-                ui.tags.div("Please upload an input dataset"),
-                type='error', 
-                duration=5  # Adjust duration as needed
-            )
-        else:
-            try:
-                dq = DataQuality(df)
-                return dq
-            except Exception as e:
-                print("!! error in initialise DQ tool")
+    # # initialise DQ tool
+    # @reactive.Calc
+    # @reactive.event(input.initialise_params, input.run_parameters)
+    # def initialise_DQ_tool():
+    #     df = input_df_global()
+    #     if df is None or df.empty:
+    #         # Show notification if no data is uploaded
+    #         ui.notification_show(
+    #             ui.tags.div("Please upload an input dataset"),
+    #             type='error', 
+    #             duration=5  # Adjust duration as needed
+    #         )
+    #     else:
+    #         try:
+    #             dq = DataQuality(df)
+    #             return dq
+    #         except Exception as e:
+    #             print("!! error in initialise DQ tool")
     
     # render editable test parameters 
     @render_widget
@@ -460,7 +501,10 @@ def server(input, output, session):
                 progress.inc(message="(2/8) Test parameters loaded.")
                 await asyncio.sleep(0.5)  # Wait for 1 second
 
-                dq = initialise_DQ_tool()
+                dq = dq_tool_holder.get()
+                if dq is None:
+                    ui.notification_show("Please upload CDM zip first.", type="error")
+                    return
                 progress.inc(message="(3/8) Data Quality tool initialised.")
                 await asyncio.sleep(0.5)  # Wait for 1 second
 
@@ -508,7 +552,17 @@ def server(input, output, session):
             ui.notification_show("Metrics computation completed successfully.", type='message')
             # Update UI elements or global state as necessary
         except Exception as e:
-            ui.notification_show(f"An error occurred while running metrics: {e}", type='error')
+            import traceback, sys
+            # Print full traceback to your terminal
+            print("=== ERROR in run_metrics ===", file=sys.stderr)
+            traceback.print_exc()
+            # Optionally show the exception message in the UI
+            ui.notification_show(
+                ui.tags.div(f"Error: {e}"),
+                type='error',
+                duration=10
+            )
+            return
 
     # ======================================
     # ======= DOWNLOAD Full Results ========
