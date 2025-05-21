@@ -1,0 +1,67 @@
+// OMOP v5.4 + Oncology prototype (dummy‐data only)
+
+// PERSON
+table person {
+  person_id                bigint      [pk]
+  birth_date               date        [not null]
+  gender_source_value      varchar(50) [not null]
+  ethnicity_source_value   varchar(50)
+}
+
+// DEATH
+table death {
+  death_id                 bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  death_date               date        [not null]
+}
+
+// CONDITION_OCCURRENCE
+table condition_occurrence {
+  condition_occurrence_id  bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  condition_start_date     date        [not null]
+  condition_source_value   varchar(50) [not null]  // your ICD-10 code
+  primary_site_source_value varchar(50)
+  eform_data_log_id        bigint
+  condition_record_datetime datetime
+  reporting_site           varchar(100)
+}
+
+// OBSERVATION
+// (TNM stages, performance, primary site, treatment type)
+table observation {
+  observation_id           bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  observation_date         date
+  observation_datetime     datetime
+  observation_source_value varchar(100) [not null]
+  value_as_number          float
+}
+
+// PROCEDURE_OCCURRENCE
+// (Radiotherapy start/end)
+table procedure_occurrence {
+  procedure_occurrence_id   bigint      [pk]
+  person_id                 bigint      [not null, ref: > person.person_id]
+  procedure_date            date        [not null]
+  procedure_source_value    varchar(50) [not null]
+}
+
+// EPISODE (Oncology Extension)
+// (One row per RT course)
+table episode {
+  episode_id               bigint      [pk]
+  person_id                bigint      [not null, ref: > person.person_id]
+  episode_start_date       date        [not null]
+  episode_end_date         date
+  fraction_count           int
+}
+
+// EPISODE_EVENT (Oncology Extension)
+// (Links each RT start/end & obs → that episode)
+table episode_event {
+  episode_event_id         bigint      [pk]
+  episode_id               bigint      [not null, ref: > episode.episode_id]
+  event_table              varchar(50) [not null]  // e.g. 'procedure_occurrence' or 'observation'
+  event_id                 bigint      [not null]
+}
