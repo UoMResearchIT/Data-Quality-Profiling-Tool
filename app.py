@@ -75,9 +75,9 @@ app_ui = ui.page_fillable(
 
     ui.navset_tab(
 
-        # ==== tab 1. Welcome Page & Instructions ====
+        # ==== tab 1. About & Instructions ====
         ui.nav_panel(
-            "1. Welcome",
+            "1. About",
             ui.card(
                 about_text,
             ),
@@ -109,9 +109,10 @@ app_ui = ui.page_fillable(
                         ),
                     ),
                 ui.card(
+                    ui.help_text("Upload CDM zip"),
                     ui.input_file(
                         id="upload_cdm_zip",
-                        label="Upload CDM zip",
+                        label="",
                         button_label="Browse (zip)",
                         accept=[".zip"]
                         ),
@@ -167,7 +168,7 @@ app_ui = ui.page_fillable(
                 
         # ==== tab 4. DQ Dashboard ====
         ui.nav_panel(
-            "4. DQ Dashboard",
+            "4. Dashboard",
 
             ui.card(
                 ui.input_action_button(id = "run_parameters", label = "Set and Run Parameters")
