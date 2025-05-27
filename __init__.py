@@ -6,5 +6,5 @@ from .Consistency import *
 from .Timeliness import *
 from .Validity import *
 from .Accuracy import *
-from .UtilitiesDQMaRC import *
+from .Utilities import *
 from .app import *

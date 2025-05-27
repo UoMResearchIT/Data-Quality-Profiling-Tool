@@ -22,7 +22,7 @@ Validity_Date_Range_Max,String,01/01/2025,"If ""Validity_Dates_Future"" = ""TRUE
 Validity_NHS_Number,Boolean,TRUE or FALSE,TRUE/FALSE if the NHS validity algorithm checker is applicable.
 Validity_Postcode_UK,Boolean,TRUE or FALSE,TRUE/FALSE to raise an error if invalid UK postcodes are detected.
 Validity_Lookup_Table,Boolean,TRUE or FALSE,TRUE/FALSE if a data standard is applicable.
-Validity_Lookup_Table_Filename,String,LU_toydf_ICD10_v5.csv,"If ""Validity_Lookup_Table""=""TRUE"", what is the filename of the data standard. Ensure the csv/xlsx file is available in the proper directory. DQMaRC assumes the file is in current directory + '/../src/data/lookups'."
+Validity_Lookup_Table_Filename,String,LU_toydf_ICD10_v5.csv,"If ""Validity_Lookup_Table""=""TRUE"", what is the filename of the data standard. Ensure the csv/xlsx file is available in the proper directory. The Data Quality Profiling Tool assumes the file is in current directory + '/../src/data/lookups'."
 Validity_Range,Boolean,TRUE or FALSE,"TRUE/FALSE if a numerical range applicable, e.g. 0-100?"
 Validity_Range_Numeric,String,0|110,"If ""Validity_Range""=""TRUE"", supply the numerical range permissible. The min and max range values are separated by a pipe delimiter."
 Validity_Pattern,Boolean,TRUE or FALSE,TRUE/FALSE if a valid pattern is applicable. 
