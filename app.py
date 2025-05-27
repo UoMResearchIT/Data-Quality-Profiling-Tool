@@ -20,7 +20,7 @@ from datetime import datetime
 
 # === custom modules ===
 from DataQuality import DataQuality
-from UtilitiesDQMaRC import (
+from Utilities import (
     MetricCalculator, 
     BarPlotGenerator, 
     DonutChartGenerator, 
@@ -249,7 +249,7 @@ app_ui = ui.page_fillable(
 def server(input, output, session):
     """
     Defines the server logic for handling user inputs, processing data,
-    and generating outputs for DQMaRC.
+    and generating outputs for the Data Quality Profiling Tool.
 
     Functions
     ---------

@@ -473,7 +473,7 @@ class DataQuality:
         self.accuracy.run_metrics()
 
 def main():
-    print("Running DQMaRC application")
+    print("Running Data Quality Profiling Tool")
 
 if __name__ == "__main__":
     main()

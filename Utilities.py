@@ -368,10 +368,11 @@ def col_good(row):
 about_text = TagList(
     tags.h3("CRUK Data Quality Profiling Tool"),
     tags.p(
-        "Use this tool to check your data on six dimensions: "
+        "Check data quality on six dimensions: "
         "Completeness, Validity, Uniqueness, Timeliness, Consistency, and Accuracy."
     )
 )
+
 key_features_text = TagList(
     tags.h4("Features"),
     tags.strong("Six Quality Checks"), 
@@ -387,6 +388,7 @@ key_features_text = TagList(
     tags.strong("Multiple File Types"), 
     "Upload CDM ZIP, CSV, or Excel files."
 )
+
 get_started_text = TagList(
     tags.h4("Getting Started"),
     tags.strong("1) Upload"), 
@@ -402,7 +404,6 @@ get_started_text = TagList(
     tags.strong("6) Export"), 
     "Download results and error reports as CSV or Excel."
 )
-
 error_input_df_text = TagList(
     ui.markdown(
         """

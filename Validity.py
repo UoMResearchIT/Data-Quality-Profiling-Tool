@@ -197,7 +197,7 @@ class Validity(Dimension):
     #     def func(col, extra_args=None):
     #         lookup_name = self.test_params[self.test_params['Field'] == col][self.tests[test]['arg1']].item()
 
-    #         lookup_path = resource_filename('DQMaRC', f'data/lookups/{lookup_name}')
+    #         lookup_path = resource_filename('Data-Quality-Profiling-Tool', f'data/lookups/{lookup_name}')
     #         lookup = pd.read_csv(lookup_path)
 
 
@@ -219,7 +219,7 @@ class Validity(Dimension):
                     lookup = pd.read_csv(infile)
                 except FileNotFoundError:
                     # Second path using the parent directory of the script
-                    lookup_path = resource_filename('DQMaRC', f'data/lookups/{lookup_codes}')
+                    lookup_path = resource_filename(__package__, f'data/lookups/{lookup_codes}')
                     lookup = pd.read_csv(lookup_path)
 
                 # Extract valid codes from the first column
