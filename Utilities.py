@@ -366,52 +366,44 @@ def col_good(row):
     return metric_color_map.get(row['Metric'], default_color)
 
 about_text = TagList(
-    tags.h3("Welcome to the Data Quality Profiling Tool"),
+    tags.h3("CRUK Data Quality Profiling Tool"),
     tags.p(
-        """
-        This is the front-end to a data quality 
-        profiling tool that is built in python.
-        It provides a suite of data quality tests across six dimensions, 
-        including """, 
-        tags.strong("Completeness"), ", ",
-        tags.strong("Validity"), ", ",
-        tags.strong("Uniqueness"), ", ",
-        tags.strong("Timeliness"), ", ",
-        tags.strong("Consistency"), " and " ,
-        tags.strong("Accuracy"),".",
-        style="""
-        text-align: justify;
-        word-break:break-word;
-        hyphens: auto;
-        """,
-    ),
+        "Check data quality on six dimensions: "
+        "Completeness, Validity, Uniqueness, Timeliness, Consistency, and Accuracy."
+    )
 )
 
 key_features_text = TagList(
-    tags.h4("Key Features"),
-    tags.strong("1) Comprehensive DQ Checks:"),
-    "Dive deep into your data with checks across six critical dimensions of data quality.",
-    tags.strong("2) Custom Test Parameters: "),
-    "Tailor data quality checks to meet the unique needs of your dataset with customisable test parameters.",
-    tags.strong("3) Aggregated Results Overview: "),
-    "Gain a bird's-eye view of your data's quality through aggregated summaries and detailed error reporting.",
-    tags.strong("4) Dynamic Test Configuration: "),
-    "Easily configure and modify tests to adapt to your evolving data quality requirements.",
-    tags.strong("5) Interactive Results Analysis: "),                
-    "Explore error details with interactive reports that make pinpointing issues straightforward.",
-)
-get_started_text = TagList(
-    tags.h4("Get Started"),
-    tags.strong("1) Upload Your Dataset:"),
-    "Begin by uploading a csv of the dataset you wish to analyse.",
-    tags.strong("2) Set Your Test Parameters: "),
-    "Customise your data quality checks by setting parameters tailored to your dataset's specific needs. You can do this by initialising a test parameter template based on your input dataset. ",
-    tags.strong("3) Run Data Quality Checks: "),
-    "Execute a comprehensive suite of tests across your dataset with just a click.",
-    tags.strong("4) Analyse Results: "),
-    "View aggregated summaries, explore detailed error reports, and make informed decisions to improve your data quality.",
+    tags.h4("Features"),
+    tags.strong("Six Quality Checks"), 
+    "Runs checks for completeness, validity, uniqueness, timeliness, consistency, and accuracy.",
+    tags.strong("Adjustable Settings"), 
+    "Change thresholds, date ranges, and lookup tables.",
+    tags.strong("Charts and Tables"), 
+    "View summary charts and drill down into detailed tables.",
+    tags.strong("Quality Scores"), 
+    "Get overall and per-dimension scores.",
+    tags.strong("Error Logs"), 
+    "See and export records that failed any check.",
+    tags.strong("Multiple File Types"), 
+    "Upload CDM ZIP, CSV, or Excel files."
 )
 
+get_started_text = TagList(
+    tags.h4("Getting Started"),
+    tags.strong("1) Upload"), 
+    "Choose your CDM ZIP, CSV, or Excel file.",
+    tags.strong("2) Verify"), 
+    "Check table, row, and column counts.",
+    tags.strong("3) Configure"), 
+    "Set thresholds or upload lookup tables under Parameters.",
+    tags.strong("4) Run"), 
+    "Click Run to perform all checks.",
+    tags.strong("5) Review"), 
+    "Look at Overview for scores, Details for each dimension, and Error Logs for issues.",
+    tags.strong("6) Export"), 
+    "Download results and error reports as CSV or Excel."
+)
 error_input_df_text = TagList(
     ui.markdown(
         """
