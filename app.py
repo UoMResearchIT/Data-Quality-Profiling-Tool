@@ -75,9 +75,9 @@ app_ui = ui.page_fillable(
 
     ui.navset_tab(
 
-        # ==== tab 1. Welcome Page & Instructions ====
+        # ==== tab 1. About & Instructions ====
         ui.nav_panel(
-            "1. Welcome",
+            "1. About",
             ui.card(
                 about_text,
             ),
