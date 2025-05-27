@@ -168,7 +168,7 @@ app_ui = ui.page_fillable(
                 
         # ==== tab 4. DQ Dashboard ====
         ui.nav_panel(
-            "4. DQ Dashboard",
+            "4. Dashboard",
 
             ui.card(
                 ui.input_action_button(id = "run_parameters", label = "Set and Run Parameters")
