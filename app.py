@@ -109,9 +109,10 @@ app_ui = ui.page_fillable(
                         ),
                     ),
                 ui.card(
+                    ui.help_text("Upload CDM zip"),
                     ui.input_file(
                         id="upload_cdm_zip",
-                        label="Upload CDM zip",
+                        label="",
                         button_label="Browse (zip)",
                         accept=[".zip"]
                         ),
