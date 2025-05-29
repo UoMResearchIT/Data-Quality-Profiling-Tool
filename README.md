@@ -1,10 +1,10 @@
-This repo was forked from https://github.com/christie-nhs-data-science/DQMaRC and will form the basis of the data profiling tool for the STARTER-KIT project.
-
 # CRUK Data Quality Profiling Tool
 
 A data quality profiling tool built using Python and [Shiny for Python](https://shiny.posit.co/py/), designed to assess oncology data in up to six data quality dimensions. Completeness, Validity, Uniqueness, Timeliness, Consistency, and Accuracy. 
 
 Users can upload their dataset, configure tests, and view results in an interactive dashboard.
+
+Forked from https://github.com/christie-nhs-data-science/DQMaRC
 
 ## Installation
 
