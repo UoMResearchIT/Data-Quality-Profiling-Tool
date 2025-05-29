@@ -1,37 +1,74 @@
 This repo was forked from https://github.com/christie-nhs-data-science/DQMaRC and will form the basis of the data profiling tool for the STARTER-KIT project.
 
-# Prototype Data Model
+# CRUK Data Quality Profiling Tool
 
-(See also prototype_data_model.dbml)
+A data quality profiling tool built using Python and [Shiny for Python](https://shiny.posit.co/py/), designed to assess oncology data in up to six data quality dimensions. Completeness, Validity, Uniqueness, Timeliness, Consistency, and Accuracy. 
 
-The prototype data model includes the OMOP v5.4 person / visit / condition / drug_exposure / measurement tables, plus the episode and episode_event tables from the OMOP oncology extension.
- 
-Each 'event' e.g. visit, condition, drug exposure, measurement is tied to an 'episode' with a start and end date e.g. 1st line chemo, 2nd line chemo, radiation therapy, surgical treatment, disease relapse, palliative care etc via the episode_event table.
+Users can upload their dataset, configure tests, and view results in an interactive dashboard.
 
-![prototype_data_model](prototype_data_model.png)
+## Installation
 
-## Notes
+Instructions for **Windows 11**, **macOS**, and **Linux**.
 
-* Blue box = a table/spreadsheet
+### Prerequisites
 
-    * person: one row per patient
+- **Python 3.10** or later — download from: https://www.python.org/downloads/
+- Ensure `python` and `pip` are accessible from your command line or terminal e.g.
 
-    * visit: one row per clinic/hospital encounter
+```bash
+pip --version
+python --version
+```
 
-    * condition: one row per diagnosis
+---
 
-    * drug_exposure: one row per drug administration
+### 1. Clone the Repository
 
-    * measurement: one row per lab result/biometric
+```bash
+git clone https://github.com/UoMResearchIT/Data-Quality-Profiling-Tool.git
+cd Data-Quality-Profiling-Tool
+```
 
-    * episode: one row per course/phase of treatment
+---
 
-    * episode_event: link table tying each individual event to an episode
+### 2. Create and Activate a Virtual Environment
 
-    * Key icon next to a column = primary key (uniquely identifies each row)
+#### On **Windows**:
 
-* Lines = foreign-key relationships
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
 
-    * ○—< zero-or-many (e.g. one person may have many visits)
+#### On **macOS/Linux**:
 
-    * |—< one-to-many (e.g. each episode may have many events, and every event must point to one episode)
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+### 3. Install Dependencies
+
+Install all required Python packages from `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 4. Run the App
+
+Start the Shiny application:
+
+```bash
+shiny run --reload app.py
+```
+
+Then open your browser and navigate to:
+
+`http://localhost:8000`
+
+---
