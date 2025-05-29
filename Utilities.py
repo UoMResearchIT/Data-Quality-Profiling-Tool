@@ -366,44 +366,42 @@ def col_good(row):
     return metric_color_map.get(row['Metric'], default_color)
 
 about_text = TagList(
-    tags.h3("CRUK Data Quality Profiling Tool"),
+    tags.h3("Data Quality Profiling Tool"),
     tags.p(
-        "Check data quality on six dimensions: "
-        "Completeness, Validity, Uniqueness, Timeliness, Consistency, and Accuracy."
+        "A prototype data quality profililing tool to runs checks on up to six data quality dimensions:"
+        "Completeness, Validity, Uniqueness, Timeliness, Consistency, and Accuracy. "
+        "Users can upload their dataset, configure tests, and view results in an interactive dashboard."
     )
 )
 
-key_features_text = TagList(
-    tags.h4("Features"),
-    tags.strong("Six Quality Checks"), 
-    "Runs checks for completeness, validity, uniqueness, timeliness, consistency, and accuracy.",
-    tags.strong("Adjustable Settings"), 
-    "Change thresholds, date ranges, and lookup tables.",
-    tags.strong("Charts and Tables"), 
-    "View summary charts and drill down into detailed tables.",
-    tags.strong("Quality Scores"), 
-    "Get overall and per-dimension scores.",
-    tags.strong("Error Logs"), 
-    "See and export records that failed any check.",
-    tags.strong("Multiple File Types"), 
-    "Upload CDM ZIP, CSV, or Excel files."
+overview_text = TagList(
+    tags.h4("Usage"),
+    tags.ul(
+        tags.li(
+            "Upload your data (as a ZIP of multiple CDM files, or as a flat CSV or Excel file) "
+            "in the Data Upload tab."
+        ),
+        tags.li(
+            "Initialise, edit, and/or upload thresholds and test parameter 'rule sheets' "
+            "in the Test Parameters tab."
+        ),
+        tags.li("Run your checks in the Dashboard tab."),
+        tags.li(
+            "Test results will be displayed in an interactive dashboard in the Dashboard tab."
+        ),
+        tags.li("Download results from the Dashboard tab if required.")
+    )
 )
 
-get_started_text = TagList(
-    tags.h4("Getting Started"),
-    tags.strong("1) Upload"), 
-    "Choose your CDM ZIP, CSV, or Excel file.",
-    tags.strong("2) Verify"), 
-    "Check table, row, and column counts.",
-    tags.strong("3) Configure"), 
-    "Set thresholds or upload lookup tables under Parameters.",
-    tags.strong("4) Run"), 
-    "Click Run to perform all checks.",
-    tags.strong("5) Review"), 
-    "Look at Overview for scores, Details for each dimension, and Error Logs for issues.",
-    tags.strong("6) Export"), 
-    "Download results and error reports as CSV or Excel."
+dashboard_intro = TagList(
+    tags.h4("Dashboard Overview"),
+    tags.p(
+        "The dashboard shows one donut per dimension with your data's % good vs. % bad.  \n"
+        "Click a chart to drill into that dimension's table below, filter by field, and review individual errors."
+    )
 )
+
+
 error_input_df_text = TagList(
     ui.markdown(
         """

@@ -25,7 +25,7 @@ from Utilities import (
     BarPlotGenerator, 
     DonutChartGenerator, 
     overall_quality_fx, col_good, col_bad,
-    about_text, key_features_text, get_started_text, 
+    about_text, overview_text, dashboard_intro,
     error_input_df_text
 )
 from DataQualityCDM import DataQualityCDM
@@ -78,20 +78,9 @@ app_ui = ui.page_fillable(
         # ==== tab 1. About & Instructions ====
         ui.nav_panel(
             "1. About",
-            ui.card(
-                about_text,
-            ),
-            # DQ Dims Explanatory Text
-            ui.layout_column_wrap(
-                ui.card(
-                    key_features_text,
-                ),
-                ui.card(
-                    get_started_text,
-                ),
-                width= 1 / 2
-                ),
-            ),
+            ui.card( about_text ),
+            ui.card( overview_text ),
+        ),
 
         # ==== tab 2. Data Upload ====
         ui.nav_panel(
@@ -169,6 +158,8 @@ app_ui = ui.page_fillable(
         # ==== tab 4. DQ Dashboard ====
         ui.nav_panel(
             "4. Dashboard",
+
+            ui.card( dashboard_intro ),
 
             ui.card(
                 ui.input_action_button(id = "run_parameters", label = "Set and Run Parameters")
