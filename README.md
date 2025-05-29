@@ -72,3 +72,15 @@ Then open your browser and navigate to:
 `http://localhost:8000`
 
 ---
+
+## Usage
+
+1. Upload your data (as a ZIP of multiple CDM files, or as a flat CSV or Excel file) in the Data Upload tab.
+   
+2. Initialise, edit, and/or upload thresholds and test parameter 'rule sheets' in the Test Parameters tab.
+   
+3. Run your checks in the Dashboard tab.
+   
+4. Test results will be displayed in an interactive dashboard in the Dashboard tab.
+
+5. Download results from the Dashboard tab if required.
